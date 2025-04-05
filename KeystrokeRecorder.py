@@ -27,3 +27,6 @@ class KeystrokeRecorder:
     def start(self):
         with keyboard.Listener(on_press=self.on_press, on_release=self.on_release) as listener:
             listener.join()
+
+    def append(self, class_type):
+        self.samples.append(class_type)
