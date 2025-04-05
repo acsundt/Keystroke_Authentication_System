@@ -1,7 +1,8 @@
 import os
+import time
 
 from data_collector import collect, collect_predict, collect_training, combine_classifications, get_password, \
-    training_to_df
+    training_to_df, transform_data
 from get_user import curr_account, new_account
 import pandas as pd
 
@@ -9,8 +10,8 @@ from model import initialize_model, make_prediction
 
 
 def main():
-    hasAccount = input("Do you have an account? (Enter Y/N)").upper()
-    while hasAccount != "Y" or "N":
+    hasAccount = input("Do you have an account? (Enter Y/N) ").upper()
+    while hasAccount != "Y" and hasAccount != "N":
         hasAccount = input("Please enter Y or N").upper()
     if hasAccount == "Y":
         userName = input("Enter Username:")
@@ -29,13 +30,20 @@ def main():
 
     else:
         userNameNew = new_account()
-        print("Choose a password. Press Enter to submit it.")
+        print("Choose a password. Press shift to submit it.")
+        time.sleep(1)
         password = get_password(collect(1))
+        time.sleep(2)
+        print("Password: ", password)
         training_data_true = collect_training(1)
         print("Now type it again irregularly or find a buddy to type it.")
         training_data_false = collect_training(0)
 
-        training_data = combine_classifications(training_data_false,training_data_true)
+        training_data_transformed_false = transform_data(training_data_false)
+        training_data_transformed_true = transform_data(training_data_true)
+
+        training_data = combine_classifications(training_data_transformed_false, training_data_transformed_true)
+
         df = training_to_df(training_data, password)
         df.to_csv(userNameNew, index=False)
 

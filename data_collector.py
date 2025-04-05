@@ -6,82 +6,73 @@ import numpy as np
 
 def collect(class_type) -> []:
     recorder = KeystrokeRecorder()
-    recorder.start()
-    # Collects keystroke data until enter key is pressed
-    # Returns said data
-    return recorder.append(class_type)
+    recorder.start()  # Collects keystrokes until the shift key is pressed (for example)
+    recorder.samples.append(class_type)
+    print(recorder.samples)
+
+    return recorder  # Return the raw keystroke data
 
 
 def collect_predict() -> []:
     recorder = KeystrokeRecorder()
-    recorder.start()
-    # Collects keystroke data until enter key is pressed
-    # Returns said data
-    recorder_transformed = transform(recorder.samples)
+    recorder.start()  # Collect keystrokes for prediction
+    recorder_transformed = transform(recorder.samples)  # Transform data
     return recorder_transformed
 
 
 def collect_training(class_type) -> []:
     training_data = []
     print("Keep repeating the password. Hit Enter to stop.")
-    # print("The more times you repeat it the stronger the security.")
-    # Class_type is either 1 or 0, 0 for false, 1 for true
-    # 1 means that the password is inputted by the correct user, 0 for otherwise
-    training_data.append(collect(class_type))
-    # Collects many samples and returns 2D list
+    recorder = collect(class_type).samples
+    training_data.append(recorder)
+    print("TRAINING DATA:", training_data)# Collect multiple samples of the password
     return training_data
 
 
 def combine_classifications(training_false, training_true):
-    training = training_false + training_true
-    return training
+    return training_false + training_true  # Combine the two sets of training data
 
 
 def training_to_df(training_data, password):
-    # Training_data is transformed_data
     password_split = list(password)
-    columns = password_split.append("target")
-    df = pd.DataFrame(training_data, columns=columns)
-    # Fills the data frame with the numerical data in each row
-    # Uses each letter of the password as a column
+    print("training data", training_data)
+    print("password split:", password_split)# Split password into individual characters
+    columns = password_split + ["target"]
+    print("columns: ",columns)# Add 'target' column for labels
+    df = pd.DataFrame(training_data, columns=columns)  # Create DataFrame
     return df
 
 
 def get_password(recorder):
     password = ""
     count = 0
-    while count <= len(recorder.samples):
-        password += recorder[count][1]
-        count += 2
-    # Finds password that was collected
-    # Returns password
+    print(len(recorder.samples))
+    while count < len(recorder.samples)-1:  # Iterate over samples
+        password += recorder.samples[count][1]  # Add the key pressed to password
+        count += 2  # Skip to the next release
     return password
 
 
 def transform_data(training_data):
     transformed_data = []
-    for ls in training_data:
-        transformed_data.append(transform(ls))
-    # Returns a 2D array of numerical data
+    print("TRAining: ", training_data)
+    for i in range(len(training_data)):
+        transformed_data.append(transform(training_data[i]))  # Apply transformation to each sample
+    print("transformed data:", transformed_data)
     return transformed_data
 
 
 def transform(recorder) -> []:
     i = 0
     numerical_recorder = []
-    while i < len(recorder.samples):
-        numerical_recorder.append(recorder[i+1][2]-recorder[i][2])
-        try:
-            numerical_recorder.append(recorder[3])
-        except:
-            print()
-        i += 2
-    # Converts recorder into a list of ints
-    # Ints are the time the key is pressed/held
+
+    # Iterate through the recorder, skipping by 2 (press-release pairs)
+    while i < len(recorder) - 1:  # Ensure there's a press-release pair to process
+        press_time = recorder[i][2]
+        release_time = recorder[i + 1][2]
+        numerical_recorder.append(release_time - press_time)  # Calculate time between press-release
+        i += 2  # Move to the next key press-release pair
+
+    numerical_recorder.append(recorder[-1])  # Add the class label (0 or 1)
+
     return numerical_recorder
-
-
-
-
-
-
