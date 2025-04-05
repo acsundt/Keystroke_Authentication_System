@@ -1,6 +1,7 @@
 from typing import List
 from KeystrokeRecorder import KeystrokeRecorder
-
+import pandas as pd
+import numpy as np
 
 def collect() -> []:
     recorder = KeystrokeRecorder()
@@ -8,6 +9,24 @@ def collect() -> []:
     # Collects keystroke data until enter key is pressed
     # Returns said data
     return recorder
+
+
+def collect_training() -> []:
+    training_data = []
+    print("Keep repeating your password until you want to stop. Simply don't type anything to stop.")
+    print("The more times you repeat it the stronger the security.")
+    training_data.append(collect())
+    # Collects many samples and returns 2D list
+    return training_data
+
+
+def training_to_df(training_data, password):
+    # Training_data is transformed_data
+    password_split = list(password)
+    df = pd.DataFrame(training_data, columns=password_split)
+    # Fills the data frame with the numerical data in each row
+    # Uses each letter of the password as a column
+    return df
 
 
 def get_password(recorder: List[str]) -> str:
@@ -19,6 +38,13 @@ def get_password(recorder: List[str]) -> str:
     # Finds password that was collected
     # Returns password
     return password
+
+
+def transform_data(training_data):
+    transformed_data = []
+    for ls in training_data:
+        transformed_data.append(transform(ls))
+    return transformed_data
 
 
 def transform(recorder: List[str]) -> []:
