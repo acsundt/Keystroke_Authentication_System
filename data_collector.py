@@ -3,6 +3,7 @@ from KeystrokeRecorder import KeystrokeRecorder
 import pandas as pd
 import numpy as np
 
+
 def collect(class_type) -> []:
     recorder = KeystrokeRecorder()
     recorder.start()
@@ -30,7 +31,8 @@ def combine_classifications(training_false,training_true):
 def training_to_df(training_data, password):
     # Training_data is transformed_data
     password_split = list(password)
-    df = pd.DataFrame(training_data, columns=password_split)
+    columns = password_split.append("target")
+    df = pd.DataFrame(training_data, columns=columns)
     # Fills the data frame with the numerical data in each row
     # Uses each letter of the password as a column
     return df
