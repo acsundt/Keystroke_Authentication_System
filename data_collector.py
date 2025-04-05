@@ -12,6 +12,15 @@ def collect(class_type) -> []:
     return recorder.append(class_type)
 
 
+def collect_predict() -> []:
+    recorder = KeystrokeRecorder()
+    recorder.start()
+    # Collects keystroke data until enter key is pressed
+    # Returns said data
+    recorder_transformed = transform(recorder.samples)
+    return recorder_transformed
+
+
 def collect_training(class_type) -> []:
     training_data = []
     print("Keep repeating the password. Hit Enter to stop.")
@@ -23,7 +32,7 @@ def collect_training(class_type) -> []:
     return training_data
 
 
-def combine_classifications(training_false,training_true):
+def combine_classifications(training_false, training_true):
     training = training_false + training_true
     return training
 
@@ -38,10 +47,10 @@ def training_to_df(training_data, password):
     return df
 
 
-def get_password(recorder: List[str]) -> str:
+def get_password(recorder):
     password = ""
     count = 0
-    while count <= len(recorder):
+    while count <= len(recorder.samples):
         password += recorder[count][1]
         count += 2
     # Finds password that was collected
@@ -57,12 +66,15 @@ def transform_data(training_data):
     return transformed_data
 
 
-def transform(recorder: List[str]) -> []:
+def transform(recorder) -> []:
     i = 0
     numerical_recorder = []
-    while i < len(recorder):
+    while i < len(recorder.samples):
         numerical_recorder.append(recorder[i+1][2]-recorder[i][2])
-        numerical_recorder.append(recorder[3])
+        try:
+            numerical_recorder.append(recorder[3])
+        except:
+            print()
         i += 2
     # Converts recorder into a list of ints
     # Ints are the time the key is pressed/held

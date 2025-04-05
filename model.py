@@ -9,6 +9,7 @@ from sklearn.preprocessing import LabelEncoder
 from sklearn.preprocessing import OneHotEncoder
 import pandas as pd
 
+
 def initialize_model(df) -> RandomForestClassifier:
 
     # Trains and tests the model
@@ -37,3 +38,9 @@ def initialize_model(df) -> RandomForestClassifier:
     print(classification_report(y_test, y_pred))
 
     return RandomForestClassifier(**grid_search.best_params_, random_state=11)
+
+
+def make_prediction(rf_model,predict_data):
+    prediction = rf_model.predict(predict_data)
+    return prediction
+
