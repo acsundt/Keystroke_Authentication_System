@@ -3,6 +3,7 @@
 import time
 from pynput import keyboard
 
+
 class KeystrokeRecorder:
     def __init__(self):
         self.samples = []
