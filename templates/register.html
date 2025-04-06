@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Register</title>
+  <style>
+    body {
+      font-family: 'Merriweather';
+      background-image: linear-gradient(to bottom, #1f2937, #283548, #30425a, #3a4f6d, #435d80);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .register-container {
+      background-color: #548c9c;
+      padding: 30px;
+      border-radius: 10px;
+      width: 500px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .register-container h2 {
+      color: #fff;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .register-container input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .register-container button {
+      width: 100%;
+      padding: 10px;
+      background-color: #435d80;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .register-container button:hover {
+      background-color: #2563EB;
+    }
+
+    .error {
+      color: #fff;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="register-container">
+    <h2>Create Account</h2>
+    {% if error %}
+      <p class="error">{{ error }}</p>
+    {% endif %}
+    <form method="POST" action="/create_account">
+      <input type="text" name="username" placeholder="Enter a username" required>
+      <button type="submit">Create Account</button>
+    </form>
+  </div>
+</body>
+</html>
