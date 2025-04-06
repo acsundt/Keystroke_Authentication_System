@@ -14,7 +14,7 @@ def main():
     while hasAccount != "Y" and hasAccount != "N":
         hasAccount = input("Please enter Y or N").upper()
     if hasAccount == "Y":
-        userName = input("Enter Username:")
+        userName = input("Enter Username: ")
         userName += ".csv"
         if not os.path.exists(userName):
             userNameNew = curr_account()
@@ -25,8 +25,11 @@ def main():
 
             print("Enter Password: ")
             predict_transformed = collect_predict()
-            prediction = make_prediction(rf_model,predict_transformed)
+            print(predict_transformed)
+            prediction = make_prediction(rf_model, predict_transformed)
             print("Prediction: ", prediction)
+            print("1: True User")
+            print("0: Incorrect User")
 
     else:
         userNameNew = new_account()

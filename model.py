@@ -37,10 +37,14 @@ def initialize_model(df) -> RandomForestClassifier:
     print("Classification Report:")
     print(classification_report(y_test, y_pred))
 
-    return RandomForestClassifier(**grid_search.best_params_, random_state=11)
+    rf_model = RandomForestClassifier(**grid_search.best_params_, random_state=11)
+    rf_model.fit(X,y)
+
+    return rf_model
 
 
 def make_prediction(rf_model,predict_data):
+
     prediction = rf_model.predict(predict_data)
     return prediction
 

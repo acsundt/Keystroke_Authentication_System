@@ -17,7 +17,9 @@ def collect_predict() -> []:
     recorder = KeystrokeRecorder()
     recorder.start()  # Collect keystrokes for prediction
     recorder_transformed = transform(recorder.samples)  # Transform data
-    return recorder_transformed
+    recorder_transformed.pop(-1)
+
+    return np.array(recorder_transformed).reshape(1, -1)
 
 
 def collect_training(class_type) -> []:
