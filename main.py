@@ -36,7 +36,7 @@ def main():
         time.sleep(2)
         print("Password: ", password)
         training_data_true = collect_training(1)
-        print("Now type it again irregularly or find a buddy to type it.")
+
         training_data_false = collect_training(0)
 
         training_data_transformed_false = transform_data(training_data_false)
