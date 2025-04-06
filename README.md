@@ -1,4 +1,4 @@
-# Keystroke Dynamics Authentication System
+# Keystroke Authentication System
 
 This project implements a behavioral biometric system using **keystroke dynamics**. It analyzes typing patterns (specifically press/release timing) to distinguish between real users and imposters using a machine learning model.
 
@@ -41,4 +41,9 @@ Install them with:
 
 ```bash
 pip install pandas numpy scikit-learn pynput
+```
+How to run:
+
+```bash
+python main.py
 
