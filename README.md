@@ -21,10 +21,14 @@ The system collects how users type a password and trains a classifier to verify 
    - True user samples are labeled `1`.
    - Imposter (or variation) samples are labeled `0`.
 
-3. **Model Training**
+3. **Data Production**
+   - Synthetic data is produced using the user's inputs
+   - The data is given a range of random values based on the keystroke timings
+     
+4. **Model Training**
    - A Random Forest Classifier is trained using the labeled data.
 
-4. **Prediction**
+5. **Prediction**
    - New keystroke samples are processed and passed to the trained model for prediction.
 
 ---
