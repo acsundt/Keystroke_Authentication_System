@@ -46,4 +46,6 @@ How to run:
 
 ```bash
 python main.py
+```
 
+***Created by Brendan Moore and Aidan Sundt for Loyola University Maryland Hackathon 2025***
