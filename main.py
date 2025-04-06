@@ -57,13 +57,27 @@ def main():
         df2 = generate_synthetic_data(password, training_data_transformed_true)
 
         combined_df = pd.concat([df1, df2], ignore_index=True)
+        # Get equal number of each class
+        class_0 = combined_df[combined_df['target'] == 0]
+        class_1 = combined_df[combined_df['target'] == 1]
 
+        # Take min count to balance
+        min_count = min(len(class_0), len(class_1))
+
+        # Sample equally from both classes
+        balanced_df = pd.concat([
+            class_0.sample(min_count, random_state=42),
+            class_1.sample(min_count, random_state=42)
+        ], ignore_index=True)
+
+        # Shuffle the final dataset
+        balanced_df = balanced_df.sample(frac=1, random_state=42).reset_index(drop=True)
         # training_data = combine_classifications(training_data_transformed_false, training_data_transformed_true)
         # print("FINAL TRAINING: ", training_data)
         # generate_synthetic_data(password, training_data)
         #df = training_to_df(training_data, password)
 
-        combined_df.to_csv(userNameNew, index=False)
+        balanced_df.to_csv(userNameNew, index=False)
 
 
 
