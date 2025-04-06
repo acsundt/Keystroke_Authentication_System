@@ -29,9 +29,6 @@ The system collects how users type a password and trains a classifier to verify 
 
 ---
 
-
----
-
 ## 🐍 Dependencies
 
 - Python 3.10+
