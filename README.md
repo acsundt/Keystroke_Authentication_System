@@ -29,6 +29,14 @@ The system collects how users type a password and trains a classifier to verify 
 
 ---
 
+## ❌ Current Limitations
+
+- **Synthetic Data**: The current implementation uses **synthetic data** for training and testing. This means the model is not yet based on actual user input or real-world data. The synthetic data is generated with randomized values, which may not fully represent the performance of the model when working with real user inputs.
+  
+- **Limited User Sampling**: The system has not yet been fully configured to handle extensive or diverse user sampling. While it supports basic functionality for recording keystrokes, it is not optimized for large-scale user input collection. More work is needed to make it adaptable to varied user behavior, such as handling multiple samples, different typing speeds, or irregular patterns.
+
+---
+
 ## 🐍 Dependencies
 
 - Python 3.10+
