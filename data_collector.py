@@ -18,16 +18,16 @@ def collect_predict() -> []:
     recorder.start()  # Collect keystrokes for prediction
     recorder_transformed = transform(recorder.samples)  # Transform data
     recorder_transformed.pop(-1)
-
+    # print("recorder_transformed: ",recorder_transformed)
     return np.array(recorder_transformed).reshape(1, -1)
 
 
 def collect_training(class_type) -> []:
     training_data = []
-    print("Keep repeating the password. Hit Enter to stop.")
+    # print("Hit Enter after entering password.")
     recorder = collect(class_type).samples
     training_data.append(recorder)
-    print("TRAINING DATA:", training_data)# Collect multiple samples of the password
+    # print("TRAINING DATA:", training_data)# Collect multiple samples of the password
     return training_data
 
 
@@ -37,10 +37,10 @@ def combine_classifications(training_false, training_true):
 
 def training_to_df(training_data, password):
     password_split = list(password)
-    print("training data", training_data)
-    print("password split:", password_split)# Split password into individual characters
+    # print("training data", training_data)
+    # print("password split:", password_split)# Split password into individual characters
     columns = password_split + ["target"]
-    print("columns: ",columns)# Add 'target' column for labels
+    # print("columns: ",columns)# Add 'target' column for labels
     df = pd.DataFrame(training_data, columns=columns)  # Create DataFrame
     return df
 
@@ -57,10 +57,10 @@ def get_password(recorder):
 
 def transform_data(training_data):
     transformed_data = []
-    print("TRAining: ", training_data)
+    # print("TRAining: ", training_data)
     for i in range(len(training_data)):
         transformed_data.append(transform(training_data[i]))  # Apply transformation to each sample
-    print("transformed data:", transformed_data)
+    # print("transformed data:", transformed_data)
     return transformed_data
 
 

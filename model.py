@@ -43,7 +43,7 @@ def initialize_model(df) -> RandomForestClassifier:
     return rf_model
 
 
-def make_prediction(rf_model,predict_data):
+def make_prediction(rf_model, predict_data):
 
     prediction = rf_model.predict(predict_data)
     return prediction
